@@ -7,11 +7,13 @@ urm: main.ml
 main.ml: urm.ml lexer.ml
 	ocamlc $(OFLAGS) parser.ml lexer.ml urm.ml main.ml -o urm
 
-urm.ml: urm.mli
+urm.ml: urm.cmi
+	ocamlc -c $(OFLAGS) $@
+
+urm.cmi: urm.mli
 	ocamlc -c $(OFLAGS) $<
 
 urm.mli: parser.ml
-	ocamlc -c $(OFLAGS) $<
 
 lexer.ml: lexer.mll
 	ocamllex $<

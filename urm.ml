@@ -24,7 +24,7 @@ let exec instruction state =
     match i with
     | U_Zero r -> set_register r 0
     | U_Successor r -> set_register r (fetch_reg r + 1)
-    | U_Transfer (src, dst) -> set_register dst (fetch_reg src + 1)
+    | U_Transfer (src, dst) -> set_register dst (fetch_reg src)
   in
 
   let inc_pc s = { s with pc = s.pc + 1 } in
