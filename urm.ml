@@ -5,14 +5,16 @@ type state = { pc : int; rs : int RegisterState.t }
 
 type update = U_Zero of int | U_Successor of int | U_Transfer of int * int
 
+type mode = Normal | Trace
+
 let state_of_registers registers =
   let _, rs =
     List.fold_left
       (fun (i, tbl) r -> (i + 1, RegisterState.add i r tbl))
-      (0, RegisterState.empty) registers
+      (1, RegisterState.empty) registers
   in
 
-  { pc = 0; rs }
+  { pc = 1; rs }
 
 let exec instruction state =
   let fetch_reg r =
@@ -41,13 +43,24 @@ let exec instruction state =
 let dump_registers s =
   RegisterState.iter (fun k v -> Printf.printf "R%d => %d\n" k v) s.rs
 
-let run program state =
-  let instructions = Array.of_list program in
+let dbg_i i =
+  match i with
+  | I_Zero r -> Printf.printf "I_Zero %d\n" r
+  | I_Successor r -> Printf.printf "I_Successor %d\n" r
+  | I_Transfer (src, dst) -> Printf.printf "I_Transfer %d %d\n" src dst
+  | I_Jump (r1, r2, pc) -> Printf.printf "I_Jump %d %d %d\n" r1 r2 pc
+
+let run program state mode =
+  let is_debug = match mode with Trace -> true | Normal -> false in
+
+  (* FIXME: I_Transfer is a no-op to allow indicis to start at 1 *)
+  let instructions = Array.of_list ([ I_Transfer (1, 1) ] @ program) in
   let num_instructions = Array.length instructions - 1 in
   let rec run' s =
     if s.pc > num_instructions then s
     else
       let instruction = instructions.(s.pc) in
+      let () = if is_debug then dbg_i instruction else () in
       run' (exec instruction s)
   in
 

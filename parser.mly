@@ -6,15 +6,26 @@ type instruction =
   | I_Jump of int * int * int
 
 type program = instruction list
+
+type registers = int list
+
+type parsed = registers * program
 %}
 
-%token JUMP SUCCESSOR TRANSFER ZERO LPAREN RPAREN COLON COMMA EOF
+%token JUMP SUCCESSOR TRANSFER ZERO LPAREN RPAREN COLON COMMA CFG BIND EOF
 %token <int> NUM
 %start program
-%type  <program> program
+%type  <parsed> program
 
 %%
-program : instruction_list                                     { $1 }
+program : cfg instruction_list                                 { ($1, $2) }
+  ;
+
+cfg                  : CFG BIND LPAREN registers RPAREN        { $4 }
+  ;
+
+registers            : NUM COMMA registers                     { $1 :: $3 }
+                     | NUM                                     { $1 :: [] }
   ;
 
 instruction_list     : EOF                                     { [] }

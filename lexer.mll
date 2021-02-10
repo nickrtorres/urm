@@ -12,6 +12,8 @@ rule token = parse
   | 'Z'                  { ZERO }
   | '('                  { LPAREN }
   | ')'                  { RPAREN }
+  | 'c' 'f' 'g'          { CFG }
+  | ':' '='              { BIND }
   | ':'                  { COLON }
   | ','                  { COMMA }
   | eof                  { EOF }
