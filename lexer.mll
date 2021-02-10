@@ -18,5 +18,3 @@ rule token = parse
   | ','                  { COMMA }
   | eof                  { EOF }
   | _ { raise (LexError ("Unknown character" ^ Lexing.lexeme lexbuf)) }
-
-
