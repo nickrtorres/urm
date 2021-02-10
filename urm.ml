@@ -51,7 +51,7 @@ let dbg_i i =
   | I_Jump (r1, r2, pc) -> Printf.printf "I_Jump %d %d %d\n" r1 r2 pc
 
 let run program state mode =
-  let is_debug = match mode with Trace -> true | Normal -> false in
+  let debug = match mode with Trace -> true | Normal -> false in
 
   (* FIXME: I_Transfer is a no-op to allow indicis to start at 1 *)
   let instructions = Array.of_list ([ I_Transfer (1, 1) ] @ program) in
@@ -60,7 +60,7 @@ let run program state mode =
     if s.pc > num_instructions then s
     else
       let instruction = instructions.(s.pc) in
-      let () = if is_debug then dbg_i instruction else () in
+      let () = if debug then dbg_i instruction else () in
       run' (exec instruction s)
   in
 
