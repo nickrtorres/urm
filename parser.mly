@@ -26,8 +26,8 @@ registers            : NUM COMMA registers                          { $1 :: $3 }
                      | NUM                                          { $1 :: [] }
   ;
 
-instruction_list     : EOF                                          { [] }
-                     | instruction instruction_list                 { $1 :: $2 }
+instruction_list     : instruction instruction_list                 { $1 :: $2 } 
+                     | EOF                                          { [] } 
   ;
 
 instruction          : JUMP LPAREN NUM COMMA NUM COMMA NUM RPAREN   { I_Jump($3, $5, $7) }
