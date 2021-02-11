@@ -29,12 +29,12 @@ Z(1)
 
 Running this program yields the following results.
 ```
-% ./urm examples/lte.urm 
+% dune exec bin/main.exe -- examples/lte.urm 
 1
 ```
 
 ## Building
 
 ```
-% make
+% dune build
 ```
