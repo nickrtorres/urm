@@ -1,0 +1,7 @@
+(ocamllex lexer)
+
+(ocamlyacc parser)
+
+(library
+ (name lib)
+ (modules_without_implementation common))

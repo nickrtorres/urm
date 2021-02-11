@@ -1,19 +1,10 @@
 %{
-type instruction =
-  | I_Zero of int
-  | I_Successor of int
-  | I_Transfer of int * int
-  | I_Jump of int * int * int
-
-type program = instruction list
-
-type registers = int list
 %}
 
 %token JUMP SUCCESSOR TRANSFER ZERO LPAREN RPAREN COLON COMMA CFG BIND EOF
 %token <int> NUM
 %start program
-%type  <registers * program> program
+%type  <int list * Common.instruction list> program
 
 %%
 program              : cfg instruction_list                         { ($1, $2) }

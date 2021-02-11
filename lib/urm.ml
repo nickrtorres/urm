@@ -1,4 +1,4 @@
-open Parser
+open Common
 module RegisterState = Map.Make (Int)
 
 type state = { pc : int; rs : int RegisterState.t }
