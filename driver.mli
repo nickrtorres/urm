@@ -1,1 +1,3 @@
-val main : string array -> int
+open Urm
+
+val main : mode -> string option -> int
