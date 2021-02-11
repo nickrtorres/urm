@@ -1,4 +1,4 @@
-URM is an ocaml implementation of an **U**nlimited **R**egister **M**achine as
+URM is an OCaml implementation of an **U**nlimited **R**egister **M**achine as
 described by N.J. Cutland in *Computability: An introduction to recursive
 function theory*.
 
