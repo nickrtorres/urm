@@ -1,10 +1,11 @@
 { 
   open Parser
-  exception LexError of string
+  exception Lex_error of int * string
 }
 
 rule token = parse
-  [' ' '\t' '\n']        { token lexbuf }
+  ['\n']                 { Lexing.new_line lexbuf; token lexbuf }
+  | [' ']                { token lexbuf }
   | ['0' - '9'] * as n   { NUM (int_of_string n) }
   | 'J'                  { JUMP }
   | 'S'                  { SUCCESSOR }
@@ -17,4 +18,4 @@ rule token = parse
   | ':'                  { COLON }
   | ','                  { COMMA }
   | eof                  { EOF }
-  | _ { raise (LexError ("Unknown character" ^ Lexing.lexeme lexbuf)) }
+  | _ { raise (Lex_error (lexbuf.lex_curr_p.pos_lnum, Lexing.lexeme lexbuf)) }

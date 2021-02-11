@@ -7,7 +7,11 @@
 %type  <int list * Common.instruction list> program
 
 %%
-program              : cfg instruction_list                         { ($1, $2) }
+program              : entry                                        { $1 }
+  ;
+
+entry                : cfg instruction_list                         { ($1, $2) }
+                     | instruction_list                             { ([], $1) }
   ;
 
 cfg                  : CFG BIND LPAREN registers RPAREN             { $4 }
