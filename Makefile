@@ -4,8 +4,14 @@ OFLAGS =  -w A -warn-error A
 
 urm: main.ml
 
-main.ml: urm.ml lexer.ml
-	ocamlc $(OFLAGS) parser.ml lexer.ml urm.ml main.ml -o urm
+main.ml: driver.ml lexer.ml
+	ocamlc $(OFLAGS) parser.ml lexer.ml urm.ml driver.ml main.ml -o urm
+
+driver.ml: driver.mli
+	ocamlc -c $(OFLAGS) $@
+
+driver.mli: urm.ml
+	ocamlc -c $(OFLAGS) $@
 
 urm.ml: urm.cmi
 	ocamlc -c $(OFLAGS) $@
