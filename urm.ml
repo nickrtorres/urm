@@ -62,7 +62,7 @@ let run mode program state =
     else
       let instruction = instructions.(s.pc) in
       let () = if debug then dbg_i instruction else () in
-      run' (exec instruction s)
+      exec instruction s |> run'
   in
 
   run' state
