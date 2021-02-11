@@ -26,16 +26,16 @@ let exec instruction state =
     let set_register r v = { state with rs = RegisterState.add r v state.rs } in
     match i with
     | U_Zero r -> set_register r 0
-    | U_Successor r -> set_register r (fetch_reg r + 1)
-    | U_Transfer (src, dst) -> set_register dst (fetch_reg src)
+    | U_Successor r -> fetch_reg r + 1 |> set_register r
+    | U_Transfer (src, dst) -> fetch_reg src |> set_register dst
   in
 
   let inc_pc s = { s with pc = s.pc + 1 } in
 
   match instruction with
-  | I_Zero r -> inc_pc (update_instr (U_Zero r))
-  | I_Successor r -> inc_pc (update_instr (U_Successor r))
-  | I_Transfer (src, dst) -> inc_pc (update_instr (U_Transfer (src, dst)))
+  | I_Zero r -> U_Zero r |> update_instr |> inc_pc
+  | I_Successor r -> U_Successor r |> update_instr |> inc_pc
+  | I_Transfer (src, dst) -> U_Transfer (src, dst) |> update_instr |> inc_pc
   | I_Jump (r1, r2, pc) ->
       let r1 = fetch_reg r1 in
       let r2 = fetch_reg r2 in
