@@ -7,7 +7,7 @@ The URM supports four instructions:
 - `S(r)` that increments the contents of `r` by 1 (i.e. `r := r + 1`)
 - `T(src, dst)` that transfers the value from `src` to `dst` register (i.e.
   `dst := src`)
-- `J(m, n, q)` where the program counter is updated to `q` iff `m = n`
+- `J(m, n, q)` that updates the program counter to `q` iff `m = n`
 
 In addition to the instructions described above, the URM has a program counter
 (starting at 1) and an initial configuration (i.e. the register values that
