@@ -13,4 +13,4 @@ let main mode fname =
     0
   with Lex_error (lnum, token) ->
     let () = Printf.printf "error: line %d: invalid token: %s\n" lnum token in
-    0
+    1
