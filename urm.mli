@@ -10,4 +10,6 @@ val exec : instruction -> state -> state
 
 val dump_registers : state -> unit
 
-val run : program -> state -> mode -> state
+val run : mode -> program -> state -> state
+
+val report : state -> int

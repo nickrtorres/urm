@@ -16,10 +16,11 @@ let state_of_registers registers =
 
   { pc = 1; rs }
 
+let fetch_reg state r =
+  match RegisterState.find_opt r state.rs with Some v -> v | None -> 0
+
 let exec instruction state =
-  let fetch_reg r =
-    match RegisterState.find_opt r state.rs with Some v -> v | None -> 0
-  in
+  let fetch_reg r = fetch_reg state r in
 
   let update_instr i =
     let set_register r v = { state with rs = RegisterState.add r v state.rs } in
@@ -50,7 +51,7 @@ let dbg_i i =
   | I_Transfer (src, dst) -> Printf.printf "I_Transfer %d %d\n" src dst
   | I_Jump (r1, r2, pc) -> Printf.printf "I_Jump %d %d %d\n" r1 r2 pc
 
-let run program state mode =
+let run mode program state =
   let debug = match mode with Trace -> true | Normal -> false in
 
   (* FIXME: I_Transfer is a no-op to allow indicis to start at 1 *)
@@ -65,3 +66,5 @@ let run program state mode =
   in
 
   run' state
+
+let report state = fetch_reg state 1
