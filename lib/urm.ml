@@ -55,7 +55,7 @@ let run mode program state =
   let debug = match mode with Trace -> true | Normal -> false in
 
   (* FIXME: I_Transfer is a no-op to allow indicis to start at 1 *)
-  let instructions = Array.of_list ([ I_Transfer (1, 1) ] @ program) in
+  let instructions = Array.of_list (I_Transfer (1, 1) :: program) in
   let num_instructions = Array.length instructions - 1 in
   let rec run' s =
     if s.pc > num_instructions then s

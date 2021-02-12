@@ -22,6 +22,7 @@ registers            : NUM COMMA registers                          { $1 :: $3 }
   ;
 
 instruction_list     : instruction instruction_list                 { $1 :: $2 } 
+                     | NUM COLON instruction instruction_list       { $3 :: $4 } 
                      | EOF                                          { [] } 
   ;
 
